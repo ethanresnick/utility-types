@@ -39,6 +39,7 @@ import {
   OptionalKeys,
   PickByValueExact,
   OmitByValueExact,
+  KeysByValueExact,
   Optional,
 } from './mapped-types';
 
@@ -200,6 +201,26 @@ type ReadonlyTuple = readonly [1, 2, 3, 4];
   const fn = <T extends Props>(props: T) => {
     // @dts-jest:pass:snap
     testType<PickByValueExact<T, number>>();
+  };
+}
+
+// @dts-jest:group KeysByValueExact
+{
+  // @dts-jest:pass:snap
+  testType<KeysByValueExact<NewProps, string>>();
+
+  // @dts-jest:pass:snap
+  testType<KeysByValueExact<ReadonlyTuple, 3>>();
+
+  // @dts-jest:pass:snap
+  testType<KeysByValueExact<MixedProps, string | undefined>>();
+
+  // @dts-jest:pass:snap
+  testType<KeysByValueExact<ReadonlyTuple, undefined>>();
+
+  const fn = <T extends Props>(props: T) => {
+    // @dts-jest:pass:snap
+    testType<KeysByValueExact<T, number>>();
   };
 }
 

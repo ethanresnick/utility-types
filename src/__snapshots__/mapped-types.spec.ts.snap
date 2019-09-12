@@ -2,7 +2,7 @@
 
 exports[`Assign const result: Assign<{}, Omit<T, 'age'>> = rest 1`] = `"any"`;
 
-exports[`Assign testType<Assign<Props, NewProps>>() 1`] = `"Pick<Pick<Props, \\"name\\" | \\"visible\\"> & Pick<NewProps, \\"age\\"> & Pick<NewProps, \\"other\\">, \\"name\\" | \\"age\\" | \\"visible\\" | \\"other\\">"`;
+exports[`Assign testType<Assign<Props, NewProps>>() 1`] = `"Pick<Pick<Props, \\"name\\" | \\"visible\\"> & Pick<NewProps, \\"age\\"> & Pick<NewProps, \\"other\\">, \\"name\\" | \\"age\\" | \\"other\\" | \\"visible\\">"`;
 
 exports[`Brand testType<Brand<number, 'USD'>>() 1`] = `"Brand<number, \\"USD\\">"`;
 
@@ -102,9 +102,19 @@ exports[`FunctionKeys testType<FunctionKeys<MixedProps>>() 1`] = `"\\"setName\\"
 
 exports[`Intersection const result: Intersection<T, Omit<T, 'age'>> = rest 1`] = `"any"`;
 
-exports[`Intersection testType<Intersection<Props | NewProps, DefaultProps>>() 1`] = `"Pick<Props | NewProps, \\"age\\">"`;
+exports[`Intersection testType<Intersection<Props | NewProps, DefaultProps>>() 1`] = `"Pick<NewProps | Props, \\"age\\">"`;
 
 exports[`Intersection testType<Intersection<Props, DefaultProps>>() 1`] = `"Pick<Props, \\"age\\">"`;
+
+exports[`KeysByValueExact testType<KeysByValueExact<MixedProps, string | undefined>>() 1`] = `"\\"someKeys\\" | undefined"`;
+
+exports[`KeysByValueExact testType<KeysByValueExact<NewProps, string>>() 1`] = `"\\"age\\" | \\"other\\""`;
+
+exports[`KeysByValueExact testType<KeysByValueExact<ReadonlyTuple, 3>>() 1`] = `"\\"2\\""`;
+
+exports[`KeysByValueExact testType<KeysByValueExact<ReadonlyTuple, undefined>>() 1`] = `"never"`;
+
+exports[`KeysByValueExact testType<KeysByValueExact<T, number>>() 1`] = `"{ [K in keyof { [K in keyof T]: [number] extends [T[K]] ? [T[K]] extends [T[K] & number] ? K : never : never; }]: { [K in keyof T]: [number] extends [T[K]] ? [T[K]] extends [T[K] & number] ? K : never : never; }[K]; }[ElementsOrKeys<T>]"`;
 
 exports[`NonFunctionKeys testType<NonFunctionKeys<MixedProps>>() 1`] = `"\\"name\\" | \\"someKeys\\""`;
 
@@ -114,7 +124,7 @@ exports[`NonUndefined testType<NonUndefined<undefined>>() 1`] = `"never"`;
 
 exports[`Omit const result: Omit<T, 'age'> = rest 1`] = `"any"`;
 
-exports[`Omit testType<Omit<Props | NewProps, 'age'>>() 1`] = `"Pick<Props | NewProps, never>"`;
+exports[`Omit testType<Omit<Props | NewProps, 'age'>>() 1`] = `"Pick<NewProps | Props, never>"`;
 
 exports[`Omit testType<Omit<Props, 'age'>>() 1`] = `"Pick<Props, \\"name\\" | \\"visible\\">"`;
 
