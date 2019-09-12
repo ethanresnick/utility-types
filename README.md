@@ -89,6 +89,7 @@ Issues can be funded by anyone and the money will be transparently distributed t
 * [`RequiredKeys<T>`](#requiredkeyst)
 * [`Optional<T, K>`](#optionalt-k)
 * [`OptionalKeys<T>`](#optionalkeyst)
+* [`ElementsOrKeys<T>`](#elementsorkeyst)
 * [`Partial<T>`](#partialt) _(built-in)_
 * [`DeepPartial<T>`](#deeppartialt)
 * [`Required<T>`](#requiredt) _(built-in)_
@@ -383,6 +384,19 @@ type OptionalProps = OptionalKeys<Props>;
 ```
 
 [⇧ back to top](#table-of-contents)
+
+## `ElementsOrKeys<T>`
+
+Get the keys of an object type `T`, or the elements (i.e., value-holding numeric indices) of a tuple type (as strings).
+
+```ts
+type Obj = { req: number; reqUndef: number | undefined; opt?: string; };
+type Tuple = [number, number | undefined, string];
+// Expect: "req" | "reqUndef" | "opt"
+type ElementsOrKeys = OptionalKeys<Obj>;
+// Expect: "0" | "1" | "2"
+type ElementsOrKeys = OptionalKeys<Tuple>;
+```
 
 ---
 

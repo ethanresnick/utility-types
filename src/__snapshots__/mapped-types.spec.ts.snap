@@ -86,6 +86,16 @@ exports[`Diff const result: Diff<T, Pick<T, 'age'>> = rest 1`] = `"any"`;
 
 exports[`Diff testType<Diff<Props, NewProps>>() 1`] = `"Pick<Props, \\"name\\" | \\"visible\\">"`;
 
+exports[`ElementsOrKeys testType<ElementsOrKeys<MixedProps>>() 1`] = `"\\"name\\" | \\"setName\\" | \\"someKeys\\" | \\"someFn\\""`;
+
+exports[`ElementsOrKeys testType<ElementsOrKeys<ReadWriteProps>>() 1`] = `"\\"a\\" | \\"b\\""`;
+
+exports[`ElementsOrKeys testType<ElementsOrKeys<ReadonlyTuple>>() 1`] = `"\\"1\\" | \\"2\\" | \\"3\\" | \\"0\\""`;
+
+exports[`ElementsOrKeys testType<ElementsOrKeys<StringArray>>() 1`] = `"never"`;
+
+exports[`ElementsOrKeys testType<ElementsOrKeys<Tuple>>() 1`] = `"\\"1\\" | \\"2\\" | \\"0\\""`;
+
 exports[`Falsey testType<Falsey>() 1`] = `"Falsey"`;
 
 exports[`FunctionKeys testType<FunctionKeys<MixedProps>>() 1`] = `"\\"setName\\" | \\"someFn\\""`;
