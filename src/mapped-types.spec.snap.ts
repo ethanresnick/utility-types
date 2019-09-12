@@ -2,6 +2,7 @@ import { testType } from '../utils/test-utils';
 import {
   Primitive,
   Falsey,
+  SameType,
   SetIntersection,
   SetDifference,
   SetComplement,
@@ -76,6 +77,30 @@ type RequiredOptionalProps = {
 {
   // @dts-jest:pass:snap -> Falsey
   testType<Falsey>();
+}
+
+// @dts-jest:group SameType
+{
+  // @dts-jest:pass:snap -> true
+  testType<SameType<number, number>>();
+
+  // @dts-jest:pass:snap -> false
+  testType<SameType<number, number | string>>();
+
+  // @dts-jest:pass:snap -> false
+  testType<SameType<number | string, number>>();
+
+  // @dts-jest:pass:snap -> false
+  testType<SameType<string, boolean>>();
+
+  // @dts-jest:pass:snap -> true
+  testType<SameType<() => void, () => void>>();
+
+  // @dts-jest:pass:snap -> false
+  testType<SameType<() => void, (() => void) | true>>();
+
+  // @dts-jest:pass:snap -> false
+  testType<SameType<() => void, () => void | true>>();
 }
 
 // @dts-jest:group SetIntersection
@@ -175,7 +200,7 @@ type RequiredOptionalProps = {
   testType<PickByValueExact<RequiredOptionalProps, undefined>>();
 
   const fn = <T extends Props>(props: T) => {
-    // @dts-jest:pass:snap -> Pick<T, { [Key in keyof T]: [number] extends [T[Key]] ? [T[Key]] extends [T[Key] & number] ? Key : never : never; }[keyof T]>
+    // @dts-jest:pass:snap -> Pick<T, { [Key in keyof T]: SameType<number, T[Key]> extends true ? Key : never; }[keyof T]>
     testType<PickByValueExact<T, number>>();
   };
 }
@@ -222,7 +247,7 @@ type RequiredOptionalProps = {
   testType<OmitByValueExact<RequiredOptionalProps, undefined>>();
 
   const fn = <T extends Props>(props: T) => {
-    // @dts-jest:pass:snap -> Pick<T, { [Key in keyof T]: [number] extends [T[Key]] ? [T[Key]] extends [T[Key] & number] ? never : Key : Key; }[keyof T]>
+    // @dts-jest:pass:snap -> Pick<T, { [Key in keyof T]: SameType<number, T[Key]> extends true ? never : Key; }[keyof T]>
     testType<OmitByValueExact<T, number>>();
   };
 }

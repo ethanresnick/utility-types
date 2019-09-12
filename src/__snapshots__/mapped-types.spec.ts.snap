@@ -124,7 +124,7 @@ exports[`OmitByValueExact testType<OmitByValueExact<RequiredOptionalProps, numbe
 
 exports[`OmitByValueExact testType<OmitByValueExact<RequiredOptionalProps, undefined>>() 1`] = `"Pick<RequiredOptionalProps, \\"req\\" | \\"reqUndef\\" | \\"opt\\" | \\"optUndef\\" | undefined>"`;
 
-exports[`OmitByValueExact testType<OmitByValueExact<T, number>>() 1`] = `"Pick<T, { [Key in keyof T]: [number] extends [T[Key]] ? [T[Key]] extends [T[Key] & number] ? never : Key : Key; }[keyof T]>"`;
+exports[`OmitByValueExact testType<OmitByValueExact<T, number>>() 1`] = `"Pick<T, { [Key in keyof T]: SameType<number, T[Key]> extends true ? never : Key; }[keyof T]>"`;
 
 exports[`Optional testType<Optional<Props, 'age' | 'visible'>>({ name: 'Yolo' }) 1`] = `"Optional<Props, \\"age\\" | \\"visible\\">"`;
 
@@ -154,7 +154,7 @@ exports[`PickByValueExact testType<PickByValueExact<RequiredOptionalProps, numbe
 
 exports[`PickByValueExact testType<PickByValueExact<RequiredOptionalProps, undefined>>() 1`] = `"Pick<RequiredOptionalProps, undefined>"`;
 
-exports[`PickByValueExact testType<PickByValueExact<T, number>>() 1`] = `"Pick<T, { [Key in keyof T]: [number] extends [T[Key]] ? [T[Key]] extends [T[Key] & number] ? Key : never : never; }[keyof T]>"`;
+exports[`PickByValueExact testType<PickByValueExact<T, number>>() 1`] = `"Pick<T, { [Key in keyof T]: SameType<number, T[Key]> extends true ? Key : never; }[keyof T]>"`;
 
 exports[`Primitive testType<Primitive>() 1`] = `"Primitive"`;
 
@@ -163,6 +163,20 @@ exports[`PromiseType testType<PromiseType<Promise<string>>>() 1`] = `"string"`;
 exports[`ReadonlyKeys testType<ReadonlyKeys<ReadWriteProps>>() 1`] = `"\\"a\\""`;
 
 exports[`RequiredKeys testType<RequiredKeys<RequiredOptionalProps>>() 1`] = `"\\"req\\" | \\"reqUndef\\""`;
+
+exports[`SameType testType<SameType<() => void, (() => void) | true>>() 1`] = `"false"`;
+
+exports[`SameType testType<SameType<() => void, () => void | true>>() 1`] = `"false"`;
+
+exports[`SameType testType<SameType<() => void, () => void>>() 1`] = `"true"`;
+
+exports[`SameType testType<SameType<number | string, number>>() 1`] = `"false"`;
+
+exports[`SameType testType<SameType<number, number | string>>() 1`] = `"false"`;
+
+exports[`SameType testType<SameType<number, number>>() 1`] = `"true"`;
+
+exports[`SameType testType<SameType<string, boolean>>() 1`] = `"false"`;
 
 exports[`SetComplement testType<SetComplement<'1' | '2' | '3', '2' | '3'>>() 1`] = `"\\"1\\""`;
 

@@ -114,6 +114,7 @@ Issues can be funded by anyone and the money will be transparently distributed t
 * [`PromiseType<T>`](#promisetypet)
 * [`Unionize<T>`](#unionizet)
 * [`Brand<T, U>`](#brandt-u)
+* [`SameType<T,U>`](#sametypet-u)
 
 ## Flow's Utility Types
 
@@ -788,7 +789,23 @@ gross(usd); // ok
 gross(eur); // Type '"EUR"' is not assignable to type '"USD"'.
 ```
 
-[⇧ back to top](#flows-utility-types)
+[⇧ back to top](#table-of-contents)
+
+### `SameType<T, U>`
+
+Produces `true` or `false` depending on whether T and U are identical types.
+
+**Usage:**
+
+```ts
+import { SameType } from 'utility-types';
+
+type A = SameType<number, number> // true
+type B = SameType<number, number | string> // false
+type C = SameType<object, boolean> // false
+```
+
+[⇧ back to top](#table-of-contents)
 
 ---
 
