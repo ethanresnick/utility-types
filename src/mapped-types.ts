@@ -269,6 +269,28 @@ export type PickByValueExact<T, ValueType> = Pick<
 >;
 
 /**
+ * KeysByValueExact
+ * @desc From `T` return a union of keys whose value exactly matches `ValueType`.
+ * @example
+ *   type Props = { req: number; reqUndef: number | undefined; opt?: string; };
+ *
+ *   // Expect: "req"
+ *   type Props = KeysByValueExact<Props, number>;
+ *
+ *   // Expect: "reqUndef"
+ *   type Props = KeysByValueExact<Props, number | undefined>;
+ */
+export type KeysByValueExact<T, ValueType> = {
+  [K in keyof ToKeyMatches<T, ValueType>]: ToKeyMatches<T, ValueType>[K]
+}[ElementsOrKeys<T>];
+
+type ToKeyMatches<T, ValueType> = {
+  [K in keyof T]: [ValueType] extends [T[K]]
+    ? ([T[K]] extends [ValueType] ? K : never)
+    : never
+};
+
+/**
  * Omit (complements Pick)
  * @desc From `T` remove a set of properties by key `K`
  * @example

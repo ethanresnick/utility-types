@@ -40,6 +40,7 @@ import {
   OptionalKeys,
   PickByValueExact,
   OmitByValueExact,
+  KeysByValueExact,
   Optional,
   Values,
 } from './mapped-types';
@@ -229,11 +230,31 @@ type ReadonlyTuple = readonly [1, 2, 3, 4];
   };
 }
 
+// @dts-jest:group KeysByValueExact
+{
+  // @dts-jest:pass:snap -> "age" | "other"
+  testType<KeysByValueExact<NewProps, string>>();
+
+  // @dts-jest:pass:snap -> "2"
+  testType<KeysByValueExact<ReadonlyTuple, 3>>();
+
+  // @dts-jest:pass:snap -> "someKeys" | undefined
+  testType<KeysByValueExact<MixedProps, string | undefined>>();
+
+  // @dts-jest:pass:snap -> never
+  testType<KeysByValueExact<ReadonlyTuple, undefined>>();
+
+  const fn = <T extends Props>(props: T) => {
+    // @dts-jest:pass:snap -> { [K in keyof { [K in keyof T]: [number] extends [T[K]] ? [T[K]] extends [T[K] & number] ? K : never : never; }]: { [K in keyof T]: [number] extends [T[K]] ? [T[K]] extends [T[K] & number] ? K : never : never; }[K]; }[ElementsOrKeys<T>]
+    testType<KeysByValueExact<T, number>>();
+  };
+}
+
 // @dts-jest:group Omit
 {
   // @dts-jest:pass:snap -> Pick<Props, "name" | "visible">
   testType<Omit<Props, 'age'>>();
-  // @dts-jest:pass:snap -> Pick<Props | NewProps, never>
+  // @dts-jest:pass:snap -> Pick<NewProps | Props, never>
   testType<Omit<Props | NewProps, 'age'>>();
 
   const fn = <T extends Props>(props: T) => {
@@ -280,7 +301,7 @@ type ReadonlyTuple = readonly [1, 2, 3, 4];
 {
   // @dts-jest:pass:snap -> Pick<Props, "age">
   testType<Intersection<Props, DefaultProps>>();
-  // @dts-jest:pass:snap -> Pick<Props | NewProps, "age">
+  // @dts-jest:pass:snap -> Pick<NewProps | Props, "age">
   testType<Intersection<Props | NewProps, DefaultProps>>();
 
   const fn = <T extends Props>(props: T) => {
@@ -328,7 +349,7 @@ type ReadonlyTuple = readonly [1, 2, 3, 4];
 
 // @dts-jest:group Assign
 {
-  // @dts-jest:pass:snap -> Pick<Pick<Props, "name" | "visible"> & Pick<NewProps, "age"> & Pick<NewProps, "other">, "name" | "age" | "visible" | "other">
+  // @dts-jest:pass:snap -> Pick<Pick<Props, "name" | "visible"> & Pick<NewProps, "age"> & Pick<NewProps, "other">, "name" | "age" | "other" | "visible">
   testType<Assign<Props, NewProps>>();
 
   const fn = <T extends Props>(props: T) => {

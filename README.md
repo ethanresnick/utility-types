@@ -456,6 +456,21 @@ type Props = PickByValueExact<Props, number | undefined>;
 
 [⇧ back to top](#table-of-contents)
 
+### `KeysByValueExact<T, ValueType>`
+
+From `T` return a union of keys whose value exactly matches `ValueType`.
+
+**Usage:**
+```ts
+type Props = { req: number; reqUndef: number | undefined; opt?: string; };
+// Expect: "req"
+type Props = KeysByValueExact<Props, number>;
+// Expect: "reqUndef"
+type Props = KeysByValueExact<Props, number | undefined>;
+```
+
+[⇧ back to top](#table-of-contents)
+
 ### `Omit<T, K>`
 
 From `T` remove a set of properties by key `K`
