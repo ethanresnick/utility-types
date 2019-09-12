@@ -26,6 +26,7 @@ import {
   DeepPartial,
   WritableKeys,
   ReadonlyKeys,
+  ElementsOrKeys,
   Brand,
   _DeepNonNullableArray,
   _DeepNonNullableObject,
@@ -63,6 +64,10 @@ type RequiredOptionalProps = {
   opt?: string;
   optUndef?: string | undefined;
 };
+
+type Tuple = [1, 3, 4];
+type StringArray = string[];
+type ReadonlyTuple = readonly [1, 2, 3, 4];
 
 /**
  * Tests
@@ -162,6 +167,24 @@ type RequiredOptionalProps = {
 {
   // @dts-jest:pass:snap
   testType<ReadonlyKeys<ReadWriteProps>>();
+}
+
+// @dts-jest:group ElementsOrKeys
+{
+  // @dts-jest:pass:snap
+  testType<ElementsOrKeys<Tuple>>();
+
+  // @dts-jest:pass:snap
+  testType<ElementsOrKeys<StringArray>>();
+
+  // @dts-jest:pass:snap
+  testType<ElementsOrKeys<ReadonlyTuple>>();
+
+  // @dts-jest:pass:snap
+  testType<ElementsOrKeys<MixedProps>>();
+
+  // @dts-jest:pass:snap
+  testType<ElementsOrKeys<ReadWriteProps>>();
 }
 
 // @dts-jest:group RequiredKeys

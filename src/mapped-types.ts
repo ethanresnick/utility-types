@@ -206,6 +206,23 @@ export type OptionalKeys<T> = {
 }[keyof T];
 
 /**
+ * ElementsOrKeys
+ * @desc get the keys of an object type, or the elements (i.e., value-holding numeric indices) of a tuple type (as strings).
+ * @example
+ *   type Obj = { req: number; reqUndef: number | undefined; opt?: string; };
+ *   type Tuple = [number, number | undefined, string];
+ *
+ *   // Expect: "req" | "reqUndef" | "opt"
+ *   type ElementsOrKeys = OptionalKeys<Obj>;
+ *
+ *   // Expect: "0" | "1" | "2"
+ *   type ElementsOrKeys = OptionalKeys<Tuple>;
+ */
+export type ElementsOrKeys<O> = O extends ArrayLike<any>
+  ? Exclude<keyof O, keyof any[]>
+  : (O extends ReadonlyArray<any> ? Exclude<keyof O, keyof any[]> : keyof O);
+
+/**
  * Pick (complements Omit)
  * @desc From `T` pick a set of properties by key `K`
  * @example
