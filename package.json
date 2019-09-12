@@ -1,5 +1,5 @@
 {
-  "name": "utility-types",
+  "name": "@ethanresnick/utility-types",
   "version": "3.7.0",
   "description": "Utility Types Collection for TypeScript",
   "author": "Piotr Witek <piotrek.witek@gmail.com> (http://piotrwitek.github.io)",
