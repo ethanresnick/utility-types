@@ -285,9 +285,7 @@ export type KeysByValueExact<T, ValueType> = {
 }[ElementsOrKeys<T>];
 
 type ToKeyMatches<T, ValueType> = {
-  [K in keyof T]: [ValueType] extends [T[K]]
-    ? ([T[K]] extends [ValueType] ? K : never)
-    : never
+  [K in keyof T]: SameType<ValueType, T[K]> extends true ? K : never
 };
 
 /**

@@ -245,7 +245,7 @@ type ReadonlyTuple = readonly [1, 2, 3, 4];
   testType<KeysByValueExact<ReadonlyTuple, undefined>>();
 
   const fn = <T extends Props>(props: T) => {
-    // @dts-jest:pass:snap -> { [K in keyof { [K in keyof T]: [number] extends [T[K]] ? [T[K]] extends [T[K] & number] ? K : never : never; }]: { [K in keyof T]: [number] extends [T[K]] ? [T[K]] extends [T[K] & number] ? K : never : never; }[K]; }[ElementsOrKeys<T>]
+    // @dts-jest:pass:snap -> { [K in keyof { [K in keyof T]: SameType<number, T[K]> extends true ? K : never; }]: { [K in keyof T]: SameType<number, T[K]> extends true ? K : never; }[K]; }[ElementsOrKeys<T>]
     testType<KeysByValueExact<T, number>>();
   };
 }
