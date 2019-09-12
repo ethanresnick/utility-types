@@ -26,6 +26,27 @@ export type Primitive = number | bigint | boolean | string | symbol;
 export type Falsey = null | undefined | false | 0 | '';
 
 /**
+ * SameType
+ * @desc Type representing whether two types are the same type.
+ * @example
+ *   type A = 'a' | 'b';
+ *   type B = 'b';
+ *
+ *   // Expect: false
+ *   SameType<A, B>;
+ */
+export type SameType<T, U> = Exclude<T, U> | Exclude<U, T> extends never
+  ? (T extends (...it: any[]) => any
+      ? (U extends (...it: any[]) => any
+          ? (
+              | Exclude<ReturnType<T>, ReturnType<U>>
+              | Exclude<ReturnType<U>, ReturnType<T>> extends never
+              ? true
+              : false)
+          : false)
+      : true)
+  : false;
+/**
  * SetIntersection (same as Extract)
  * @desc Set intersection of given union types `A` and `B`
  * @example
@@ -226,11 +247,7 @@ export type PickByValue<T, ValueType> = Pick<
 export type PickByValueExact<T, ValueType> = Pick<
   T,
   {
-    [Key in keyof T]: [ValueType] extends [T[Key]]
-      ? [T[Key]] extends [ValueType]
-        ? Key
-        : never
-      : never
+    [Key in keyof T]: SameType<ValueType, T[Key]> extends true ? Key : never
   }[keyof T]
 >;
 
@@ -276,11 +293,7 @@ export type OmitByValue<T, ValueType> = Pick<
 export type OmitByValueExact<T, ValueType> = Pick<
   T,
   {
-    [Key in keyof T]: [ValueType] extends [T[Key]]
-      ? [T[Key]] extends [ValueType]
-        ? never
-        : Key
-      : Key
+    [Key in keyof T]: SameType<ValueType, T[Key]> extends true ? never : Key
   }[keyof T]
 >;
 

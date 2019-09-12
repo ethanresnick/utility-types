@@ -2,6 +2,7 @@ import { testType } from '../utils/test-utils';
 import {
   Primitive,
   Falsey,
+  SameType,
   SetIntersection,
   SetDifference,
   SetComplement,
@@ -77,6 +78,30 @@ type RequiredOptionalProps = {
 {
   // @dts-jest:pass:snap
   testType<Falsey>();
+}
+
+// @dts-jest:group SameType
+{
+  // @dts-jest:pass:snap
+  testType<SameType<number, number>>();
+
+  // @dts-jest:pass:snap
+  testType<SameType<number, number | string>>();
+
+  // @dts-jest:pass:snap
+  testType<SameType<number | string, number>>();
+
+  // @dts-jest:pass:snap
+  testType<SameType<string, boolean>>();
+
+  // @dts-jest:pass:snap
+  testType<SameType<() => void, () => void>>();
+
+  // @dts-jest:pass:snap
+  testType<SameType<() => void, (() => void) | true>>();
+
+  // @dts-jest:pass:snap
+  testType<SameType<() => void, () => void | true>>();
 }
 
 // @dts-jest:group SetIntersection
