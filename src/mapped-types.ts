@@ -578,34 +578,34 @@ export type Optional<T extends object, K extends keyof T = keyof T> = Omit<
   Partial<Pick<T, K>>;
 
 /**
- * $ValuesType
+ * Values
  * @desc get the union type of all the values in an object, array or array-like type `T`
  * @example
  *    type Props = { name: string; age: number; visible: boolean };
  *    // Expect: string | number | boolean
- *    type PropsValues = $ValuesType<Props>;
+ *    type PropsValues = Values<Props>;
  *
  *    type NumberArray = number[];
  *    // Expect: number
- *    type NumberItems = $ValuesType<NumberArray>;
+ *    type NumberItems = Values<NumberArray>;
  *
  *    type ReadonlySymbolArray = readonly symbol[];
  *    // Expect: symbol
- *    type SymbolItems = $ValuesType<ReadonlySymbolArray>;
+ *    type SymbolItems = Values<ReadonlySymbolArray>;
  *
  *    type NumberTuple = [1, 2];
  *    // Expect: 1 | 2
- *    type NumberUnion = $ValuesType<NumberTuple>;
+ *    type NumberUnion = Values<NumberTuple>;
  *
  *    type ReadonlyNumberTuple = readonly [1, 2];
  *    // Expect: 1 | 2
- *    type AnotherNumberUnion = $ValuesType<NumberTuple>;
+ *    type AnotherNumberUnion = Values<NumberTuple>;
  *
  *    type BinaryArray = Uint8Array;
  *    // Expect: number
- *    type BinaryItems = $ValuesType<BinaryArray>;
+ *    type BinaryItems = Values<BinaryArray>;
  */
-export type ValuesType<
+export type Values<
   T extends ReadonlyArray<any> | ArrayLike<any> | Record<any, any>
 > = T extends ReadonlyArray<any>
   ? T[number]

@@ -106,7 +106,7 @@ Issues can be funded by anyone and the money will be transparently distributed t
 * [`Subtract<T, T1>`](#subtractt-t1)
 * [`Overwrite<T, U>`](#overwritet-u)
 * [`Assign<T, U>`](#assignt-u)
-* [`ValuesType<T>`](#valuestypet)
+* [`Values<T>`](#valuest)
 
 ## Special operators
 
@@ -587,30 +587,30 @@ type ExtendedProps = Assign<Props, NewProps>;
 
 [⇧ back to top](#table-of-contents)
 
-### `ValuesType<T>`
+### `Values<T>`
 
-Get the union type of all the values in an object, tuple, array or array-like type `T`.
+Get the union type of all the values in an object, tuple, array or array-like type `T`. (This is a more general version of `$Values<T>`.)
 
 **Usage:**
 
 ```ts
-import { ValuesType } from 'utility-types';
+import { Values } from 'utility-types';
 
 type Props = { name: string; age: number; visible: boolean };
 // Expect: string | number | boolean
-type PropsValues = $ValuesType<Props>;
+type PropsValues = Values<Props>;
 
 type NumberArray = number[];
 // Expect: number
-type NumberItems = $ValuesType<NumberArray>;
+type NumberItems = Values<NumberArray>;
 
 type ReadonlyNumberTuple = readonly [1, 2];
 // Expect: 1 | 2
-type AnotherNumberUnion = $ValuesType<NumberTuple>;
+type AnotherNumberUnion = Values<NumberTuple>;
 
 type BinaryArray = Uint8Array;
 // Expect: number
-type BinaryItems = $ValuesType<BinaryArray>;
+type BinaryItems = Values<BinaryArray>;
 ```
 
 [⇧ back to top](#table-of-contents)
@@ -945,7 +945,7 @@ type ItemsType = $ElementType<Arr, number>;
 
 type Obj = { [key: string]: number };
 // Expect: number
-type ValuesType = $ElementType<Obj, string>;
+type Values = $ElementType<Obj, string>;
 ```
 
 [⇧ back to top](#flows-utility-types)
