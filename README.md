@@ -10,7 +10,7 @@ Collection of utility types, complementing TypeScript built-in mapped types and 
 [![NPM Downloads](https://img.shields.io/npm/dm/utility-types.svg)](https://www.npmjs.com/package/utility-types)
 [![NPM Downloads](https://img.shields.io/npm/dt/utility-types.svg)](https://www.npmjs.com/package/utility-types)
 
-> #### _Found it useful? Want more updates?_ [**Show your support by giving a :star:**](https://github.com/piotrwitek/utility-types/stargazers)  
+> #### _Found it useful? Want more updates?_ [**Show your support by giving a :star:**](https://github.com/piotrwitek/utility-types/stargazers)
 
 ## TypeScript compatibility notes
 * v1 - minimum TS v2.7.2
@@ -62,12 +62,12 @@ Issues can be funded by anyone and the money will be transparently distributed t
 ## Aliases
 
 * [`Primitive`](#primitive)
-* [`Falsey`](#falsey)
+* [`Falsy`](#falsy)
 
 ## Type Guards
 
 * ['isPrimitive'](#isprimitive)
-* ['isFalsey'](#isfalsey)
+* ['isFalsy'](#isfalsy)
 
 ## Union operators
 
@@ -92,11 +92,11 @@ Issues can be funded by anyone and the money will be transparently distributed t
 * [`ElementsOrKeys<T>`](#elementsorkeyst)
 * [`Partial<T>`](#partialt) _(built-in)_
 * [`DeepPartial<T>`](#deeppartialt)
-* [`Required<T>`](#requiredt) _(built-in)_
+* [`Required<T, K>`](#requiredt-k)
 * [`DeepRequired<T>`](#deeprequiredt)
 * [`Readonly<T>`](#readonlyt) _(built-in)_
 * [`DeepReadonly<T>`](#deepreadonlyt)
-* [`Pick<T, K>` _(built-in)_](#pickt-k-built-in) 
+* [`Pick<T, K>` _(built-in)_](#pickt-k-built-in)
 * [`Omit<T, K>`](#omitt-k) _(built-in)_
 * [`PickByValue<T, ValueType>`](#pickbyvaluet-valuetype)
 * [`PickByValueExact<T, ValueType>`](#pickbyvalueexactt-valuetype)
@@ -145,9 +145,9 @@ You can test for singular of these types with [`typeof`](https://developer.mozil
 
 [⇧ back to top](#table-of-contents)
 
-### `Falsey`
+### `Falsy`
 
-Type representing falsey values in TypeScript: `null | undefined | false | 0 | ''`
+Type representing falsy values in TypeScript: `null | undefined | false | 0 | ''`
 > Except `NaN` which cannot be represented as a type literal
 
 [⇧ back to top](#table-of-contents)
@@ -172,9 +172,9 @@ const consumer = (param: Primitive[] | Primitive): string => {
 };
 ```
 
-### `isFalsey`
+### `isFalsy`
 
-As `isPrimitive` but for the type [`Falsey`](#falsey).
+As `isPrimitive` but for the type [`Falsy`](#falsy).
 
 ### `SetIntersection<A, B>` (same as Extract)
 
@@ -360,12 +360,12 @@ From `T` make a set of properties by key `K` become optional
 ```ts
 import { Optional } from 'utility-types';
 
-type Props = { name: string; age: number; visilbe: boolean; };
+type Props = { name: string; age: number; visible: boolean; };
 
-// Expect: { name?: string; age?: number; visilbe?: boolean; }
+// Expect: { name?: string; age?: number; visible?: boolean; }
 type Props = Optional<Props>
-// Expect: { name: string; age?: number; visilbe?: boolean; }
-type Props = Optional<Props, 'age' | 'visilbe'>;
+// Expect: { name: string; age?: number; visible?: boolean; }
+type Props = Optional<Props, 'age' | 'visible'>;
 ```
 
 [⇧ back to top](#table-of-contents)
@@ -651,9 +651,22 @@ Make all properties of object type optional
 
 [⇧ back to top](#table-of-contents)
 
-### `Required<T>`
+### `Required<T, K>`
 
-Make all properties of object type non-optional
+From `T` make a set of properties by key `K` become required
+
+**Usage:**
+
+```ts
+import { Required } from 'utility-types';
+
+type Props = { name?: string; age?: number; visible?: boolean; };
+
+// Expect: { name: string; age: number; visible: boolean; }
+type Props = Required<Props>
+// Expect: { name?: string; age: number; visible: boolean; }
+type Props = Required<Props, 'age' | 'visible'>;
+```
 
 [⇧ back to top](#table-of-contents)
 
@@ -825,7 +838,7 @@ type PartialNestedProps = DeepPartial<NestedProps>;
 
 ### `Brand<T, U>`
 
-Define nominal type of `U` based on type of `T`.
+Define nominal type of `U` based on type of `T`. Similar to Opaque types in Flow.
 
 **Usage:**
 
@@ -871,7 +884,7 @@ type C = SameType<object, boolean> // false
 
 ### `$Keys<T>`
 
-get the union type of all the keys in an object type `T`  
+get the union type of all the keys in an object type `T`
 https://flow.org/en/docs/types/utilities/#toc-keys
 
 **Usage:**
@@ -889,7 +902,7 @@ type PropsKeys = $Keys<Props>;
 
 ### `$Values<T>`
 
-get the union type of all the values in an object type `T`  
+get the union type of all the values in an object type `T`
 https://flow.org/en/docs/types/utilities/#toc-values
 
 **Usage:**
@@ -907,7 +920,7 @@ type PropsValues = $Values<Props>;
 
 ### <a id="readonly2"></a> `$ReadOnly<T>`
 
-get the read-only version of a given object type `T`  
+get the read-only version of a given object type `T`
 https://flow.org/en/docs/types/utilities/#toc-readonly
 
 **Usage:**
@@ -925,7 +938,7 @@ type ReadOnlyProps = $ReadOnly<Props>;
 
 ### <a id="diff2"></a> `$Diff<T, U>`
 
-get the set difference of a given object types `T` and `U` (`T \ U`)  
+get the set difference of a given object types `T` and `U` (`T \ U`)
 https://flow.org/en/docs/types/utilities/#toc-diff
 
 **Usage:**
@@ -944,7 +957,7 @@ type RequiredProps = $Diff<Props, DefaultProps>;
 
 ### `$PropertyType<T, K>`
 
-get the type of property of an object at a given key `K`  
+get the type of property of an object at a given key `K`
 https://flow.org/en/docs/types/utilities/#toc-propertytype
 
 **Usage:**
@@ -967,7 +980,7 @@ type B = $PropertyType<Tuple, '1'>;
 
 ### `$ElementType<T, K>`
 
-get the type of elements inside of array, tuple or object of type `T`, that matches the given index type `K`  
+get the type of elements inside of array, tuple or object of type `T`, that matches the given index type `K`
 https://flow.org/en/docs/types/utilities/#toc-elementtype
 
 **Usage:**
@@ -1043,7 +1056,7 @@ type PartialProps = $Shape<Props>;
 
 ### `$NonMaybeType<T>`
 
-Converts a type `T` to a non-maybe type. In other words, the values of `$NonMaybeType<T>` are the values of `T` except for `null` and `undefined`.  
+Converts a type `T` to a non-maybe type. In other words, the values of `$NonMaybeType<T>` are the values of `T` except for `null` and `undefined`.
 https://flow.org/en/docs/types/utilities/#toc-nonmaybe
 
 **Usage:**
@@ -1061,9 +1074,9 @@ type Name = $NonMaybeType<MaybeName>;
 
 ### `Class<T>`
 
-Given a type T representing instances of a class C, the type Class<T> is the type of the class C  
-https://flow.org/en/docs/types/utilities/#toc-class  
-\* Differs from original Flow's util - implements only constructor part and won't include any static members. Additionally classes in Typescript are not treated as nominal 
+Given a type T representing instances of a class C, the type Class<T> is the type of the class C
+https://flow.org/en/docs/types/utilities/#toc-class
+\* Differs from original Flow's util - implements only constructor part and won't include any static members. Additionally classes in Typescript are not treated as nominal
 
 **Usage:**
 
@@ -1080,7 +1093,7 @@ function makeStore(storeClass: Class<Store>): Store {
 
 ### mixed
 
-An arbitrary type that could be anything (same as `unknown`)  
+An arbitrary type that could be anything (same as `unknown`)
 https://flow.org/en/docs/types/mixed
 
 [⇧ back to top](#table-of-contents)
@@ -1089,7 +1102,8 @@ https://flow.org/en/docs/types/mixed
 
 ## Related Projects
 
-- [`ts-toolbelt`](https://github.com/pirix-gh/ts-toolbelt) - Higher type safety for TypeScript 
+- [`ts-toolbelt`](https://github.com/pirix-gh/ts-toolbelt) - Higher type safety for TypeScript
+- [`$mol_type`](https://github.com/eigenmethod/mol/tree/master/type) - Collection of TypeScript meta types for complex logic
 
 ---
 

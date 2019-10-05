@@ -1,29 +1,9 @@
+import { Primitive } from "./aliases-and-guards";
+
 /**
  * Credits to all the people who given inspiration and shared some very useful code snippets
  * in the following github issue: https://github.com/Microsoft/TypeScript/issues/12215
  */
-
-/**
- * Primitive
- * @desc Type representing primitive types in TypeScript: `number | bigint | boolean | string | symbol`
- * @example
- *   type Various = number | string | object;
- *
- *    // Expect: object
- *   type Cleaned = Exclude<Various, Primitive>
- */
-export type Primitive = number | bigint | boolean | string | symbol;
-
-/**
- * Falsey
- * @desc Type representing falsey values in TypeScript: `null | undefined | false | 0 | ''`
- * @example
- *   type Various = 'a' | 'b' | undefined | false;
- *
- *   // Expect: "a" | "b"
- *   Exclude<Various, Falsey>;
- */
-export type Falsey = null | undefined | false | 0 | '';
 
 /**
  * SameType
@@ -46,6 +26,7 @@ export type SameType<T, U> = Exclude<T, U> | Exclude<U, T> extends never
           : false)
       : true)
   : false;
+
 /**
  * SetIntersection (same as Extract)
  * @desc Set intersection of given union types `A` and `B`
@@ -116,7 +97,7 @@ export type NonUndefined<A> = A extends undefined ? never : A;
  *   type Keys = FunctionKeys<MixedProps>;
  */
 export type FunctionKeys<T extends object> = {
-  [K in keyof T]-?: NonUndefined<T[K]> extends Function ? K : never
+  [K in keyof T]-?: NonUndefined<T[K]> extends Function ? K : never;
 }[keyof T];
 
 /**
@@ -129,7 +110,7 @@ export type FunctionKeys<T extends object> = {
  *   type Keys = NonFunctionKeys<MixedProps>;
  */
 export type NonFunctionKeys<T extends object> = {
-  [K in keyof T]-?: NonUndefined<T[K]> extends Function ? never : K
+  [K in keyof T]-?: NonUndefined<T[K]> extends Function ? never : K;
 }[keyof T];
 
 /**
@@ -148,7 +129,7 @@ export type WritableKeys<T extends object> = {
     { [Q in P]: T[P] },
     { -readonly [Q in P]: T[P] },
     P
-  >
+  >;
 }[keyof T];
 
 /**
@@ -168,7 +149,7 @@ export type ReadonlyKeys<T extends object> = {
     { -readonly [Q in P]: T[P] },
     never,
     P
-  >
+  >;
 }[keyof T];
 
 type IfEquals<X, Y, A = X, B = never> = (<T>() => T extends X
@@ -188,7 +169,7 @@ type IfEquals<X, Y, A = X, B = never> = (<T>() => T extends X
  *   type Keys = RequiredKeys<Props>;
  */
 export type RequiredKeys<T> = {
-  [K in keyof T]-?: {} extends Pick<T, K> ? never : K
+  [K in keyof T]-?: {} extends Pick<T, K> ? never : K;
 }[keyof T];
 
 /**
@@ -202,7 +183,7 @@ export type RequiredKeys<T> = {
  *   type Keys = OptionalKeys<Props>;
  */
 export type OptionalKeys<T> = {
-  [K in keyof T]-?: {} extends Pick<T, K> ? K : never
+  [K in keyof T]-?: {} extends Pick<T, K> ? K : never;
 }[keyof T];
 
 /**
@@ -264,7 +245,7 @@ export type PickByValue<T, ValueType> = Pick<
 export type PickByValueExact<T, ValueType> = Pick<
   T,
   {
-    [Key in keyof T]: SameType<ValueType, T[Key]> extends true ? Key : never
+    [Key in keyof T]: SameType<ValueType, T[Key]> extends true ? Key : never;
   }[keyof T]
 >;
 
@@ -281,11 +262,11 @@ export type PickByValueExact<T, ValueType> = Pick<
  *   type Props = KeysByValueExact<Props, number | undefined>;
  */
 export type KeysByValueExact<T, ValueType> = {
-  [K in keyof ToKeyMatches<T, ValueType>]: ToKeyMatches<T, ValueType>[K]
+  [K in keyof ToKeyMatches<T, ValueType>]: ToKeyMatches<T, ValueType>[K];
 }[ElementsOrKeys<T>];
 
 type ToKeyMatches<T, ValueType> = {
-  [K in keyof T]: SameType<ValueType, T[K]> extends true ? K : never
+  [K in keyof T]: SameType<ValueType, T[K]> extends true ? K : never;
 };
 
 /**
@@ -330,7 +311,7 @@ export type OmitByValue<T, ValueType> = Pick<
 export type OmitByValueExact<T, ValueType> = Pick<
   T,
   {
-    [Key in keyof T]: SameType<ValueType, T[Key]> extends true ? never : Key
+    [Key in keyof T]: SameType<ValueType, T[Key]> extends true ? never : Key;
   }[keyof T]
 >;
 
@@ -427,7 +408,7 @@ export type Exact<A extends object> = A & { __brand: keyof A };
  *   type UnionizedType = Unionize<Props>;
  */
 export type Unionize<T extends object> = {
-  [P in keyof T]: { [Q in P]: T[P] }
+  [P in keyof T]: { [Q in P]: T[P] };
 }[keyof T];
 
 /**
@@ -462,19 +443,19 @@ export type PromiseType<T extends Promise<any>> = T extends Promise<infer U>
  *   };
  *   type ReadonlyNestedProps = DeepReadonly<NestedProps>;
  */
-export type DeepReadonly<T> = T extends (...args: any[]) => any
+export type DeepReadonly<T> = T extends ((...args: any[]) => any) | Primitive
   ? T
-  : T extends any[]
-  ? _DeepReadonlyArray<T[number]>
-  : T extends object
-  ? _DeepReadonlyObject<T>
+  : T extends _DeepReadonlyArray<infer U>
+  ? _DeepReadonlyArray<U>
+  : T extends _DeepReadonlyObject<infer V>
+  ? _DeepReadonlyObject<V>
   : T;
 /** @private */
 // tslint:disable-next-line:class-name
 export interface _DeepReadonlyArray<T> extends ReadonlyArray<DeepReadonly<T>> {}
 /** @private */
 export type _DeepReadonlyObject<T> = {
-  readonly [P in keyof T]: DeepReadonly<T[P]>
+  readonly [P in keyof T]: DeepReadonly<T[P]>;
 };
 
 /**
@@ -510,7 +491,7 @@ export interface _DeepRequiredArray<T>
   extends Array<DeepRequired<NonUndefined<T>>> {}
 /** @private */
 export type _DeepRequiredObject<T> = {
-  [P in keyof T]-?: DeepRequired<NonUndefined<T[P]>>
+  [P in keyof T]-?: DeepRequired<NonUndefined<T[P]>>;
 };
 
 /**
@@ -547,7 +528,7 @@ export interface _DeepNonNullableArray<T>
   extends Array<DeepNonNullable<NonNullable<T>>> {}
 /** @private */
 export type _DeepNonNullableObject<T> = {
-  [P in keyof T]-?: DeepNonNullable<NonNullable<T[P]>>
+  [P in keyof T]-?: DeepNonNullable<NonNullable<T[P]>>;
 };
 
 /**
@@ -585,7 +566,7 @@ export type _DeepPartialObject<T> = { [P in keyof T]?: DeepPartial<T[P]> };
 
 /**
  * Brand
- * @desc Define nominal type of U based on type of T.
+ * @desc Define nominal type of U based on type of T. Similar to Opaque types in Flow.
  * @example
  *   type USD = Brand<number, "USD">
  *   type EUR = Brand<number, "EUR">
@@ -664,3 +645,24 @@ export type Values<
   : T extends object
   ? T[keyof T]
   : never;
+
+/**
+ * Required
+ * @desc From `T` make a set of properties by key `K` become required
+ * @example
+ *    type Props = {
+ *      name?: string;
+ *      age?: number;
+ *      visible?: boolean;
+ *    };
+ *
+ *    // Expect: { name: string; age: number; visible: boolean; }
+ *    type Props = Required<Props>;
+ *
+ *    // Expect: { name?: string; age: number; visible: boolean; }
+ *    type Props = Required<Props, 'age' | 'visible'>;
+ */
+export type AugmentedRequired<
+  T extends object,
+  K extends keyof T = keyof T
+> = Omit<T, K> & Required<Pick<T, K>>;

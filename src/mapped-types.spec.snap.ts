@@ -1,7 +1,5 @@
-import { testType } from '../utils/test-utils';
+import { testType } from "../utils/test-utils";
 import {
-  Primitive,
-  Falsey,
   SameType,
   SetIntersection,
   SetDifference,
@@ -43,7 +41,8 @@ import {
   KeysByValueExact,
   Optional,
   Values,
-} from './mapped-types';
+  AugmentedRequired
+} from "./mapped-types";
 
 /**
  * Fixtures
@@ -74,18 +73,6 @@ type ReadonlyTuple = readonly [1, 2, 3, 4];
  * Tests
  */
 
-// @dts-jest:group Primitive
-{
-  // @dts-jest:pass:snap -> Primitive
-  testType<Primitive>();
-}
-
-// @dts-jest:group Falsey
-{
-  // @dts-jest:pass:snap -> Falsey
-  testType<Falsey>();
-}
-
 // @dts-jest:group SameType
 {
   // @dts-jest:pass:snap -> true
@@ -113,7 +100,7 @@ type ReadonlyTuple = readonly [1, 2, 3, 4];
 // @dts-jest:group SetIntersection
 {
   // @dts-jest:pass:snap -> "2" | "3"
-  testType<SetIntersection<'1' | '2' | '3', '2' | '3' | '4'>>();
+  testType<SetIntersection<"1" | "2" | "3", "2" | "3" | "4">>();
   // @dts-jest:pass:snap -> () => void
   testType<SetIntersection<string | number | (() => void), () => void>>();
 }
@@ -121,7 +108,7 @@ type ReadonlyTuple = readonly [1, 2, 3, 4];
 // @dts-jest:group SetDifference
 {
   // @dts-jest:pass:snap -> "1"
-  testType<SetDifference<'1' | '2' | '3', '2' | '3' | '4'>>();
+  testType<SetDifference<"1" | "2" | "3", "2" | "3" | "4">>();
   // @dts-jest:pass:snap -> string | number
   testType<SetDifference<string | number | (() => void), () => void>>();
 }
@@ -129,13 +116,13 @@ type ReadonlyTuple = readonly [1, 2, 3, 4];
 // @dts-jest:group SetComplement
 {
   // @dts-jest:pass:snap -> "1"
-  testType<SetComplement<'1' | '2' | '3', '2' | '3'>>();
+  testType<SetComplement<"1" | "2" | "3", "2" | "3">>();
 }
 
 // @dts-jest:group SymmetricDifference
 {
   // @dts-jest:pass:snap -> "1" | "4"
-  testType<SymmetricDifference<'1' | '2' | '3', '2' | '3' | '4'>>();
+  testType<SymmetricDifference<"1" | "2" | "3", "2" | "3" | "4">>();
 }
 
 // @dts-jest:group NonUndefined
@@ -253,17 +240,17 @@ type ReadonlyTuple = readonly [1, 2, 3, 4];
 // @dts-jest:group Omit
 {
   // @dts-jest:pass:snap -> Pick<Props, "name" | "visible">
-  testType<Omit<Props, 'age'>>();
+  testType<Omit<Props, "age">>();
   // @dts-jest:pass:snap -> Pick<NewProps | Props, never>
-  testType<Omit<Props | NewProps, 'age'>>();
+  testType<Omit<Props | NewProps, "age">>();
 
   const fn = <T extends Props>(props: T) => {
     // @dts-jest:pass:snap -> Pick<T, SetDifference<keyof T, "age">>
-    testType<Omit<T, 'age'>>();
+    testType<Omit<T, "age">>();
 
     const { age, ...rest } = props;
     // @dts-jest:pass:snap -> any
-    const result: Omit<T, 'age'> = rest;
+    const result: Omit<T, "age"> = rest;
   };
 }
 
@@ -307,7 +294,7 @@ type ReadonlyTuple = readonly [1, 2, 3, 4];
   const fn = <T extends Props>(props: T) => {
     const { age, ...rest } = props;
     // @dts-jest:pass:snap -> any
-    const result: Intersection<T, Omit<T, 'age'>> = rest;
+    const result: Intersection<T, Omit<T, "age">> = rest;
   };
 }
 
@@ -319,7 +306,7 @@ type ReadonlyTuple = readonly [1, 2, 3, 4];
   const fn = <T extends Props>(props: T) => {
     const { age, ...rest } = props;
     // @dts-jest:pass:snap -> any
-    const result: Diff<T, Pick<T, 'age'>> = rest;
+    const result: Diff<T, Pick<T, "age">> = rest;
   };
 }
 
@@ -331,7 +318,7 @@ type ReadonlyTuple = readonly [1, 2, 3, 4];
   const fn = <T extends Props>(props: T) => {
     const { age, ...rest } = props;
     // @dts-jest:pass:snap -> any
-    const result: Subtract<T, Pick<T, 'age'>> = rest;
+    const result: Subtract<T, Pick<T, "age">> = rest;
   };
 }
 
@@ -343,7 +330,7 @@ type ReadonlyTuple = readonly [1, 2, 3, 4];
   const fn = <T extends Props>(props: T) => {
     const { age, ...rest } = props;
     // @dts-jest:pass:snap -> any
-    const result: Overwrite<Omit<T, 'age'>, T> = rest;
+    const result: Overwrite<Omit<T, "age">, T> = rest;
   };
 }
 
@@ -355,7 +342,7 @@ type ReadonlyTuple = readonly [1, 2, 3, 4];
   const fn = <T extends Props>(props: T) => {
     const { age, ...rest } = props;
     // @dts-jest:pass:snap -> any
-    const result: Assign<{}, Omit<T, 'age'>> = rest;
+    const result: Assign<{}, Omit<T, "age">> = rest;
   };
 }
 
@@ -381,11 +368,11 @@ type ReadonlyTuple = readonly [1, 2, 3, 4];
     };
   };
   // @dts-jest:pass:snap -> _DeepReadonlyObject<{ second: { name: string; }; }>
-  testType<DeepReadonly<NestedProps>['first']>();
+  testType<DeepReadonly<NestedProps>["first"]>();
   // @dts-jest:pass:snap -> _DeepReadonlyObject<{ name: string; }>
-  testType<DeepReadonly<NestedProps>['first']['second']>();
+  testType<DeepReadonly<NestedProps>["first"]["second"]>();
   // @dts-jest:pass:snap -> string
-  testType<DeepReadonly<NestedProps>['first']['second']['name']>();
+  testType<DeepReadonly<NestedProps>["first"]["second"]["name"]>();
 
   type NestedArrayProps = {
     first: {
@@ -393,11 +380,11 @@ type ReadonlyTuple = readonly [1, 2, 3, 4];
     };
   };
   // @dts-jest:pass:snap -> _DeepReadonlyObject<{ second: { name: string; }[]; }>
-  testType<DeepReadonly<NestedArrayProps>['first']>();
+  testType<DeepReadonly<NestedArrayProps>["first"]>();
   // @dts-jest:pass:snap -> _DeepReadonlyArray<{ name: string; }>
-  testType<DeepReadonly<NestedArrayProps>['first']['second']>();
+  testType<DeepReadonly<NestedArrayProps>["first"]["second"]>();
   // @dts-jest:pass:snap -> string
-  testType<DeepReadonly<NestedArrayProps>['first']['second'][number]['name']>();
+  testType<DeepReadonly<NestedArrayProps>["first"]["second"][number]["name"]>();
 
   type NestedFunctionProps = {
     first: {
@@ -405,11 +392,21 @@ type ReadonlyTuple = readonly [1, 2, 3, 4];
     };
   };
   // @dts-jest:pass:snap -> _DeepReadonlyObject<{ second: (value: number) => string; }>
-  testType<DeepReadonly<NestedFunctionProps>['first']>();
+  testType<DeepReadonly<NestedFunctionProps>["first"]>();
   // @dts-jest:pass:snap -> (value: number) => string
-  testType<DeepReadonly<NestedFunctionProps>['first']['second']>();
+  testType<DeepReadonly<NestedFunctionProps>["first"]["second"]>();
   // @dts-jest:pass:snap -> string
-  testType<ReturnType<DeepReadonly<NestedFunctionProps>['first']['second']>>();
+  testType<ReturnType<DeepReadonly<NestedFunctionProps>["first"]["second"]>>();
+
+  // @dts-jest:pass:snap -> _DeepReadonlyObject<{ first: { second: { name: string; }; }; }>
+  testType<DeepReadonly<DeepReadonly<NestedProps>>>();
+  // @dts-jest:pass:snap -> _DeepReadonlyObject<{ first: { second: { name: string; }[]; }; }>
+  testType<DeepReadonly<DeepReadonly<NestedArrayProps>>>();
+
+  // @dts-jest:pass:snap -> string | number | bigint | boolean | symbol | null | undefined
+  testType<
+    DeepReadonly<string | null | undefined | boolean | number | bigint | symbol>
+  >();
 }
 
 // @dts-jest:group DeepRequired
@@ -422,11 +419,11 @@ type ReadonlyTuple = readonly [1, 2, 3, 4];
     };
   };
   // @dts-jest:pass:snap -> _DeepRequiredObject<{ second?: { name?: string | null | undefined; } | undefined; }>
-  testType<DeepRequired<NestedProps>['first']>();
+  testType<DeepRequired<NestedProps>["first"]>();
   // @dts-jest:pass:snap -> _DeepRequiredObject<{ name?: string | null | undefined; }>
-  testType<DeepRequired<NestedProps>['first']['second']>();
+  testType<DeepRequired<NestedProps>["first"]["second"]>();
   // @dts-jest:pass:snap -> string | null
-  testType<DeepRequired<NestedProps>['first']['second']['name']>();
+  testType<DeepRequired<NestedProps>["first"]["second"]["name"]>();
 
   type NestedArrayProps = {
     first?: {
@@ -434,11 +431,11 @@ type ReadonlyTuple = readonly [1, 2, 3, 4];
     };
   };
   // @dts-jest:pass:snap -> _DeepRequiredObject<{ second?: ({ name?: string | null | undefined; } | undefined)[] | undefined; }>
-  testType<DeepRequired<NestedArrayProps>['first']>();
+  testType<DeepRequired<NestedArrayProps>["first"]>();
   // @dts-jest:pass:snap -> _DeepRequiredArray<{ name?: string | null | undefined; } | undefined>
-  testType<DeepRequired<NestedArrayProps>['first']['second']>();
+  testType<DeepRequired<NestedArrayProps>["first"]["second"]>();
   // @dts-jest:pass:snap -> string | null
-  testType<DeepRequired<NestedArrayProps>['first']['second'][number]['name']>();
+  testType<DeepRequired<NestedArrayProps>["first"]["second"][number]["name"]>();
 
   type NestedFunctionProps = {
     first?: {
@@ -446,11 +443,11 @@ type ReadonlyTuple = readonly [1, 2, 3, 4];
     };
   };
   // @dts-jest:pass:snap -> _DeepRequiredObject<{ second?: ((value: number) => string) | undefined; }>
-  testType<DeepRequired<NestedFunctionProps>['first']>();
+  testType<DeepRequired<NestedFunctionProps>["first"]>();
   // @dts-jest:pass:snap -> (value: number) => string
-  testType<DeepRequired<NestedFunctionProps>['first']['second']>();
+  testType<DeepRequired<NestedFunctionProps>["first"]["second"]>();
   // @dts-jest:pass:snap -> string
-  testType<ReturnType<DeepRequired<NestedFunctionProps>['first']['second']>>();
+  testType<ReturnType<DeepRequired<NestedFunctionProps>["first"]["second"]>>();
 }
 
 // @dts-jest:group DeepNonNullable
@@ -463,11 +460,11 @@ type ReadonlyTuple = readonly [1, 2, 3, 4];
     };
   };
   // @dts-jest:pass:snap -> _DeepNonNullableObject<{ second?: { name?: string | null | undefined; } | null | undefined; }>
-  testType<DeepNonNullable<NestedProps>['first']>();
+  testType<DeepNonNullable<NestedProps>["first"]>();
   // @dts-jest:pass:snap -> _DeepNonNullableObject<{ name?: string | null | undefined; }>
-  testType<DeepNonNullable<NestedProps>['first']['second']>();
+  testType<DeepNonNullable<NestedProps>["first"]["second"]>();
   // @dts-jest:pass:snap -> string
-  testType<DeepNonNullable<NestedProps>['first']['second']['name']>();
+  testType<DeepNonNullable<NestedProps>["first"]["second"]["name"]>();
 
   type NestedArrayProps = {
     first?: null | {
@@ -475,12 +472,12 @@ type ReadonlyTuple = readonly [1, 2, 3, 4];
     };
   };
   // @dts-jest:pass:snap -> _DeepNonNullableObject<{ second?: ({ name?: string | null | undefined; } | null | undefined)[] | undefined; }>
-  testType<DeepNonNullable<NestedArrayProps>['first']>();
+  testType<DeepNonNullable<NestedArrayProps>["first"]>();
   // @dts-jest:pass:snap -> _DeepNonNullableArray<{ name?: string | null | undefined; } | null | undefined>
-  testType<DeepNonNullable<NestedArrayProps>['first']['second']>();
+  testType<DeepNonNullable<NestedArrayProps>["first"]["second"]>();
   // @dts-jest:pass:snap -> string
   testType<
-    DeepNonNullable<NestedArrayProps>['first']['second'][number]['name']
+    DeepNonNullable<NestedArrayProps>["first"]["second"][number]["name"]
   >();
 
   type NestedFunctionProps = {
@@ -489,12 +486,12 @@ type ReadonlyTuple = readonly [1, 2, 3, 4];
     };
   };
   // @dts-jest:pass:snap -> _DeepNonNullableObject<{ second?: ((value: number) => string) | undefined; }>
-  testType<DeepNonNullable<NestedFunctionProps>['first']>();
+  testType<DeepNonNullable<NestedFunctionProps>["first"]>();
   // @dts-jest:pass:snap -> (value: number) => string
-  testType<DeepNonNullable<NestedFunctionProps>['first']['second']>();
+  testType<DeepNonNullable<NestedFunctionProps>["first"]["second"]>();
   // @dts-jest:pass:snap -> string
   testType<
-    ReturnType<DeepNonNullable<NestedFunctionProps>['first']['second']>
+    ReturnType<DeepNonNullable<NestedFunctionProps>["first"]["second"]>
   >();
 }
 
@@ -556,7 +553,7 @@ type ReadonlyTuple = readonly [1, 2, 3, 4];
 // @dts-jest:group Brand
 {
   // @dts-jest:pass:snap -> Brand<number, "USD">
-  testType<Brand<number, 'USD'>>();
+  testType<Brand<number, "USD">>();
 }
 
 // @dts-jest:group Optional
@@ -567,9 +564,9 @@ type ReadonlyTuple = readonly [1, 2, 3, 4];
   testType<Optional<Props>>({ age: 99 });
 
   // @dts-jest:pass:snap -> Optional<Props, "age" | "visible">
-  testType<Optional<Props, 'age' | 'visible'>>({ name: 'Yolo' });
+  testType<Optional<Props, "age" | "visible">>({ name: "Yolo" });
   // @dts-jest:pass:snap -> Optional<Props, "age" | "visible">
-  testType<Optional<Props, 'age' | 'visible'>>({ name: 'Yolo', age: 99 });
+  testType<Optional<Props, "age" | "visible">>({ name: "Yolo", age: 99 });
 }
 
 // @dts-jest:group Values
@@ -595,4 +592,20 @@ type ReadonlyTuple = readonly [1, 2, 3, 4];
   testType<Values<Uint16Array>>();
   // @dts-jest:pass:snap -> number
   testType<Values<Uint32Array>>();
+}
+
+// @dts-jest:group AugmentedRequired
+{
+  // @dts-jest:pass:snap -> AugmentedRequired<Partial<Props>, "name" | "age" | "visible">
+  testType<AugmentedRequired<Partial<Props>>>({
+    name: "Yolo",
+    age: 99,
+    visible: true
+  });
+
+  // @dts-jest:pass:snap -> AugmentedRequired<Partial<Props>, "age" | "visible">
+  testType<AugmentedRequired<Partial<Props>, "age" | "visible">>({
+    age: 99,
+    visible: true
+  });
 }

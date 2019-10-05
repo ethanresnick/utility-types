@@ -1,32 +1,43 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Assign const result: Assign<{}, Omit<T, 'age'>> = rest 1`] = `"any"`;
+exports[`Assign const result: Assign<{}, Omit<T, "age">> = rest 1`] = `"any"`;
 
 exports[`Assign testType<Assign<Props, NewProps>>() 1`] = `"Pick<Pick<Props, \\"name\\" | \\"visible\\"> & Pick<NewProps, \\"age\\"> & Pick<NewProps, \\"other\\">, \\"name\\" | \\"age\\" | \\"other\\" | \\"visible\\">"`;
 
-exports[`Brand testType<Brand<number, 'USD'>>() 1`] = `"Brand<number, \\"USD\\">"`;
+exports[`AugmentedRequired testType<AugmentedRequired<Partial<Props>, "age" | "visible">>({
+      age: 99,
+      visible: true
+    }) 1`] = `"AugmentedRequired<Partial<Props>, \\"age\\" | \\"visible\\">"`;
+
+exports[`AugmentedRequired testType<AugmentedRequired<Partial<Props>>>({
+      name: "Yolo",
+      age: 99,
+      visible: true
+    }) 1`] = `"AugmentedRequired<Partial<Props>, \\"name\\" | \\"age\\" | \\"visible\\">"`;
+
+exports[`Brand testType<Brand<number, "USD">>() 1`] = `"Brand<number, \\"USD\\">"`;
 
 exports[`DeepNonNullable testType<
-      DeepNonNullable<NestedArrayProps>['first']['second'][number]['name']
+      DeepNonNullable<NestedArrayProps>["first"]["second"][number]["name"]
     >() 1`] = `"string"`;
 
 exports[`DeepNonNullable testType<
-      ReturnType<DeepNonNullable<NestedFunctionProps>['first']['second']>
+      ReturnType<DeepNonNullable<NestedFunctionProps>["first"]["second"]>
     >() 1`] = `"string"`;
 
-exports[`DeepNonNullable testType<DeepNonNullable<NestedArrayProps>['first']>() 1`] = `"_DeepNonNullableObject<{ second?: ({ name?: string | null | undefined; } | null | undefined)[] | undefined; }>"`;
+exports[`DeepNonNullable testType<DeepNonNullable<NestedArrayProps>["first"]>() 1`] = `"_DeepNonNullableObject<{ second?: ({ name?: string | null | undefined; } | null | undefined)[] | undefined; }>"`;
 
-exports[`DeepNonNullable testType<DeepNonNullable<NestedArrayProps>['first']['second']>() 1`] = `"_DeepNonNullableArray<{ name?: string | null | undefined; } | null | undefined>"`;
+exports[`DeepNonNullable testType<DeepNonNullable<NestedArrayProps>["first"]["second"]>() 1`] = `"_DeepNonNullableArray<{ name?: string | null | undefined; } | null | undefined>"`;
 
-exports[`DeepNonNullable testType<DeepNonNullable<NestedFunctionProps>['first']>() 1`] = `"_DeepNonNullableObject<{ second?: ((value: number) => string) | undefined; }>"`;
+exports[`DeepNonNullable testType<DeepNonNullable<NestedFunctionProps>["first"]>() 1`] = `"_DeepNonNullableObject<{ second?: ((value: number) => string) | undefined; }>"`;
 
-exports[`DeepNonNullable testType<DeepNonNullable<NestedFunctionProps>['first']['second']>() 1`] = `"(value: number) => string"`;
+exports[`DeepNonNullable testType<DeepNonNullable<NestedFunctionProps>["first"]["second"]>() 1`] = `"(value: number) => string"`;
 
-exports[`DeepNonNullable testType<DeepNonNullable<NestedProps>['first']>() 1`] = `"_DeepNonNullableObject<{ second?: { name?: string | null | undefined; } | null | undefined; }>"`;
+exports[`DeepNonNullable testType<DeepNonNullable<NestedProps>["first"]>() 1`] = `"_DeepNonNullableObject<{ second?: { name?: string | null | undefined; } | null | undefined; }>"`;
 
-exports[`DeepNonNullable testType<DeepNonNullable<NestedProps>['first']['second']>() 1`] = `"_DeepNonNullableObject<{ name?: string | null | undefined; }>"`;
+exports[`DeepNonNullable testType<DeepNonNullable<NestedProps>["first"]["second"]>() 1`] = `"_DeepNonNullableObject<{ name?: string | null | undefined; }>"`;
 
-exports[`DeepNonNullable testType<DeepNonNullable<NestedProps>['first']['second']['name']>() 1`] = `"string"`;
+exports[`DeepNonNullable testType<DeepNonNullable<NestedProps>["first"]["second"]["name"]>() 1`] = `"string"`;
 
 exports[`DeepPartial testType<ReturnType<NonNullable<typeof functionProp>>>() 1`] = `"string"`;
 
@@ -46,43 +57,51 @@ exports[`DeepPartial testType<typeof partialNested.first>() 1`] = `"_DeepPartial
 
 exports[`DeepPartial testType<typeof second>() 1`] = `"_DeepPartialObject<{ name: string; }> | undefined"`;
 
-exports[`DeepReadonly testType<DeepReadonly<NestedArrayProps>['first']>() 1`] = `"_DeepReadonlyObject<{ second: { name: string; }[]; }>"`;
+exports[`DeepReadonly testType<
+      DeepReadonly<string | null | undefined | boolean | number | bigint | symbol>
+    >() 1`] = `"string | number | bigint | boolean | symbol | null | undefined"`;
 
-exports[`DeepReadonly testType<DeepReadonly<NestedArrayProps>['first']['second']>() 1`] = `"_DeepReadonlyArray<{ name: string; }>"`;
+exports[`DeepReadonly testType<DeepReadonly<DeepReadonly<NestedArrayProps>>>() 1`] = `"_DeepReadonlyObject<{ first: { second: { name: string; }[]; }; }>"`;
 
-exports[`DeepReadonly testType<DeepReadonly<NestedArrayProps>['first']['second'][number]['name']>() 1`] = `"string"`;
+exports[`DeepReadonly testType<DeepReadonly<DeepReadonly<NestedProps>>>() 1`] = `"_DeepReadonlyObject<{ first: { second: { name: string; }; }; }>"`;
 
-exports[`DeepReadonly testType<DeepReadonly<NestedFunctionProps>['first']>() 1`] = `"_DeepReadonlyObject<{ second: (value: number) => string; }>"`;
+exports[`DeepReadonly testType<DeepReadonly<NestedArrayProps>["first"]>() 1`] = `"_DeepReadonlyObject<{ second: { name: string; }[]; }>"`;
 
-exports[`DeepReadonly testType<DeepReadonly<NestedFunctionProps>['first']['second']>() 1`] = `"(value: number) => string"`;
+exports[`DeepReadonly testType<DeepReadonly<NestedArrayProps>["first"]["second"]>() 1`] = `"_DeepReadonlyArray<{ name: string; }>"`;
 
-exports[`DeepReadonly testType<DeepReadonly<NestedProps>['first']>() 1`] = `"_DeepReadonlyObject<{ second: { name: string; }; }>"`;
+exports[`DeepReadonly testType<DeepReadonly<NestedArrayProps>["first"]["second"][number]["name"]>() 1`] = `"string"`;
 
-exports[`DeepReadonly testType<DeepReadonly<NestedProps>['first']['second']>() 1`] = `"_DeepReadonlyObject<{ name: string; }>"`;
+exports[`DeepReadonly testType<DeepReadonly<NestedFunctionProps>["first"]>() 1`] = `"_DeepReadonlyObject<{ second: (value: number) => string; }>"`;
 
-exports[`DeepReadonly testType<DeepReadonly<NestedProps>['first']['second']['name']>() 1`] = `"string"`;
+exports[`DeepReadonly testType<DeepReadonly<NestedFunctionProps>["first"]["second"]>() 1`] = `"(value: number) => string"`;
 
-exports[`DeepReadonly testType<ReturnType<DeepReadonly<NestedFunctionProps>['first']['second']>>() 1`] = `"string"`;
+exports[`DeepReadonly testType<DeepReadonly<NestedProps>["first"]>() 1`] = `"_DeepReadonlyObject<{ second: { name: string; }; }>"`;
 
-exports[`DeepRequired testType<DeepRequired<NestedArrayProps>['first']>() 1`] = `"_DeepRequiredObject<{ second?: ({ name?: string | null | undefined; } | undefined)[] | undefined; }>"`;
+exports[`DeepReadonly testType<DeepReadonly<NestedProps>["first"]["second"]>() 1`] = `"_DeepReadonlyObject<{ name: string; }>"`;
 
-exports[`DeepRequired testType<DeepRequired<NestedArrayProps>['first']['second']>() 1`] = `"_DeepRequiredArray<{ name?: string | null | undefined; } | undefined>"`;
+exports[`DeepReadonly testType<DeepReadonly<NestedProps>["first"]["second"]["name"]>() 1`] = `"string"`;
 
-exports[`DeepRequired testType<DeepRequired<NestedArrayProps>['first']['second'][number]['name']>() 1`] = `"string | null"`;
+exports[`DeepReadonly testType<ReturnType<DeepReadonly<NestedFunctionProps>["first"]["second"]>>() 1`] = `"string"`;
 
-exports[`DeepRequired testType<DeepRequired<NestedFunctionProps>['first']>() 1`] = `"_DeepRequiredObject<{ second?: ((value: number) => string) | undefined; }>"`;
+exports[`DeepRequired testType<DeepRequired<NestedArrayProps>["first"]>() 1`] = `"_DeepRequiredObject<{ second?: ({ name?: string | null | undefined; } | undefined)[] | undefined; }>"`;
 
-exports[`DeepRequired testType<DeepRequired<NestedFunctionProps>['first']['second']>() 1`] = `"(value: number) => string"`;
+exports[`DeepRequired testType<DeepRequired<NestedArrayProps>["first"]["second"]>() 1`] = `"_DeepRequiredArray<{ name?: string | null | undefined; } | undefined>"`;
 
-exports[`DeepRequired testType<DeepRequired<NestedProps>['first']>() 1`] = `"_DeepRequiredObject<{ second?: { name?: string | null | undefined; } | undefined; }>"`;
+exports[`DeepRequired testType<DeepRequired<NestedArrayProps>["first"]["second"][number]["name"]>() 1`] = `"string | null"`;
 
-exports[`DeepRequired testType<DeepRequired<NestedProps>['first']['second']>() 1`] = `"_DeepRequiredObject<{ name?: string | null | undefined; }>"`;
+exports[`DeepRequired testType<DeepRequired<NestedFunctionProps>["first"]>() 1`] = `"_DeepRequiredObject<{ second?: ((value: number) => string) | undefined; }>"`;
 
-exports[`DeepRequired testType<DeepRequired<NestedProps>['first']['second']['name']>() 1`] = `"string | null"`;
+exports[`DeepRequired testType<DeepRequired<NestedFunctionProps>["first"]["second"]>() 1`] = `"(value: number) => string"`;
 
-exports[`DeepRequired testType<ReturnType<DeepRequired<NestedFunctionProps>['first']['second']>>() 1`] = `"string"`;
+exports[`DeepRequired testType<DeepRequired<NestedProps>["first"]>() 1`] = `"_DeepRequiredObject<{ second?: { name?: string | null | undefined; } | undefined; }>"`;
 
-exports[`Diff const result: Diff<T, Pick<T, 'age'>> = rest 1`] = `"any"`;
+exports[`DeepRequired testType<DeepRequired<NestedProps>["first"]["second"]>() 1`] = `"_DeepRequiredObject<{ name?: string | null | undefined; }>"`;
+
+exports[`DeepRequired testType<DeepRequired<NestedProps>["first"]["second"]["name"]>() 1`] = `"string | null"`;
+
+exports[`DeepRequired testType<ReturnType<DeepRequired<NestedFunctionProps>["first"]["second"]>>() 1`] = `"string"`;
+
+exports[`Diff const result: Diff<T, Pick<T, "age">> = rest 1`] = `"any"`;
 
 exports[`Diff testType<Diff<Props, NewProps>>() 1`] = `"Pick<Props, \\"name\\" | \\"visible\\">"`;
 
@@ -96,11 +115,9 @@ exports[`ElementsOrKeys testType<ElementsOrKeys<StringArray>>() 1`] = `"never"`;
 
 exports[`ElementsOrKeys testType<ElementsOrKeys<Tuple>>() 1`] = `"\\"1\\" | \\"2\\" | \\"0\\""`;
 
-exports[`Falsey testType<Falsey>() 1`] = `"Falsey"`;
-
 exports[`FunctionKeys testType<FunctionKeys<MixedProps>>() 1`] = `"\\"setName\\" | \\"someFn\\""`;
 
-exports[`Intersection const result: Intersection<T, Omit<T, 'age'>> = rest 1`] = `"any"`;
+exports[`Intersection const result: Intersection<T, Omit<T, "age">> = rest 1`] = `"any"`;
 
 exports[`Intersection testType<Intersection<Props | NewProps, DefaultProps>>() 1`] = `"Pick<NewProps | Props, \\"age\\">"`;
 
@@ -122,13 +139,13 @@ exports[`NonUndefined testType<NonUndefined<string | null | undefined>>() 1`] = 
 
 exports[`NonUndefined testType<NonUndefined<undefined>>() 1`] = `"never"`;
 
-exports[`Omit const result: Omit<T, 'age'> = rest 1`] = `"any"`;
+exports[`Omit const result: Omit<T, "age"> = rest 1`] = `"any"`;
 
-exports[`Omit testType<Omit<Props | NewProps, 'age'>>() 1`] = `"Pick<NewProps | Props, never>"`;
+exports[`Omit testType<Omit<Props | NewProps, "age">>() 1`] = `"Pick<NewProps | Props, never>"`;
 
-exports[`Omit testType<Omit<Props, 'age'>>() 1`] = `"Pick<Props, \\"name\\" | \\"visible\\">"`;
+exports[`Omit testType<Omit<Props, "age">>() 1`] = `"Pick<Props, \\"name\\" | \\"visible\\">"`;
 
-exports[`Omit testType<Omit<T, 'age'>>() 1`] = `"Pick<T, SetDifference<keyof T, \\"age\\">>"`;
+exports[`Omit testType<Omit<T, "age">>() 1`] = `"Pick<T, SetDifference<keyof T, \\"age\\">>"`;
 
 exports[`OmitByValue testType<OmitByValue<RequiredOptionalProps, number | undefined>>() 1`] = `"Pick<RequiredOptionalProps, \\"opt\\" | \\"optUndef\\" | undefined>"`;
 
@@ -146,9 +163,9 @@ exports[`OmitByValueExact testType<OmitByValueExact<RequiredOptionalProps, undef
 
 exports[`OmitByValueExact testType<OmitByValueExact<T, number>>() 1`] = `"Pick<T, { [Key in keyof T]: SameType<number, T[Key]> extends true ? never : Key; }[keyof T]>"`;
 
-exports[`Optional testType<Optional<Props, 'age' | 'visible'>>({ name: 'Yolo' }) 1`] = `"Optional<Props, \\"age\\" | \\"visible\\">"`;
+exports[`Optional testType<Optional<Props, "age" | "visible">>({ name: "Yolo" }) 1`] = `"Optional<Props, \\"age\\" | \\"visible\\">"`;
 
-exports[`Optional testType<Optional<Props, 'age' | 'visible'>>({ name: 'Yolo', age: 99 }) 1`] = `"Optional<Props, \\"age\\" | \\"visible\\">"`;
+exports[`Optional testType<Optional<Props, "age" | "visible">>({ name: "Yolo", age: 99 }) 1`] = `"Optional<Props, \\"age\\" | \\"visible\\">"`;
 
 exports[`Optional testType<Optional<Props>>({ age: 99 }) 1`] = `"Optional<Props, \\"name\\" | \\"age\\" | \\"visible\\">"`;
 
@@ -156,7 +173,7 @@ exports[`Optional testType<Optional<Props>>({}) 1`] = `"Optional<Props, \\"name\
 
 exports[`OptionalKeys testType<OptionalKeys<RequiredOptionalProps>>() 1`] = `"\\"opt\\" | \\"optUndef\\""`;
 
-exports[`Overwrite const result: Overwrite<Omit<T, 'age'>, T> = rest 1`] = `"any"`;
+exports[`Overwrite const result: Overwrite<Omit<T, "age">, T> = rest 1`] = `"any"`;
 
 exports[`Overwrite testType<Overwrite<Props, NewProps>>() 1`] = `"Pick<Pick<Props, \\"name\\" | \\"visible\\"> & Pick<NewProps, \\"age\\">, \\"name\\" | \\"age\\" | \\"visible\\">"`;
 
@@ -175,8 +192,6 @@ exports[`PickByValueExact testType<PickByValueExact<RequiredOptionalProps, numbe
 exports[`PickByValueExact testType<PickByValueExact<RequiredOptionalProps, undefined>>() 1`] = `"Pick<RequiredOptionalProps, undefined>"`;
 
 exports[`PickByValueExact testType<PickByValueExact<T, number>>() 1`] = `"Pick<T, { [Key in keyof T]: SameType<number, T[Key]> extends true ? Key : never; }[keyof T]>"`;
-
-exports[`Primitive testType<Primitive>() 1`] = `"Primitive"`;
 
 exports[`PromiseType testType<PromiseType<Promise<string>>>() 1`] = `"string"`;
 
@@ -198,21 +213,21 @@ exports[`SameType testType<SameType<number, number>>() 1`] = `"true"`;
 
 exports[`SameType testType<SameType<string, boolean>>() 1`] = `"false"`;
 
-exports[`SetComplement testType<SetComplement<'1' | '2' | '3', '2' | '3'>>() 1`] = `"\\"1\\""`;
+exports[`SetComplement testType<SetComplement<"1" | "2" | "3", "2" | "3">>() 1`] = `"\\"1\\""`;
 
-exports[`SetDifference testType<SetDifference<'1' | '2' | '3', '2' | '3' | '4'>>() 1`] = `"\\"1\\""`;
+exports[`SetDifference testType<SetDifference<"1" | "2" | "3", "2" | "3" | "4">>() 1`] = `"\\"1\\""`;
 
 exports[`SetDifference testType<SetDifference<string | number | (() => void), () => void>>() 1`] = `"string | number"`;
 
-exports[`SetIntersection testType<SetIntersection<'1' | '2' | '3', '2' | '3' | '4'>>() 1`] = `"\\"2\\" | \\"3\\""`;
+exports[`SetIntersection testType<SetIntersection<"1" | "2" | "3", "2" | "3" | "4">>() 1`] = `"\\"2\\" | \\"3\\""`;
 
 exports[`SetIntersection testType<SetIntersection<string | number | (() => void), () => void>>() 1`] = `"() => void"`;
 
-exports[`Subtract const result: Subtract<T, Pick<T, 'age'>> = rest 1`] = `"any"`;
+exports[`Subtract const result: Subtract<T, Pick<T, "age">> = rest 1`] = `"any"`;
 
 exports[`Subtract testType<Subtract<Props, DefaultProps>>() 1`] = `"Pick<Props, \\"name\\" | \\"visible\\">"`;
 
-exports[`SymmetricDifference testType<SymmetricDifference<'1' | '2' | '3', '2' | '3' | '4'>>() 1`] = `"\\"1\\" | \\"4\\""`;
+exports[`SymmetricDifference testType<SymmetricDifference<"1" | "2" | "3", "2" | "3" | "4">>() 1`] = `"\\"1\\" | \\"4\\""`;
 
 exports[`Unionize testType<Unionize<Props>>() 1`] = `"{ name: string; } | { age: number; } | { visible: boolean; }"`;
 

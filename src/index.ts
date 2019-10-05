@@ -14,8 +14,8 @@ export {
   $ReadOnly,
   $Shape,
   $Values,
-  Class,
-} from './utility-types';
+  Class
+} from "./utility-types";
 
 export {
   Assign,
@@ -26,7 +26,6 @@ export {
   DeepRequired,
   Diff,
   ElementsOrKeys,
-  Falsey,
   FunctionKeys,
   KeysByValueExact,
   Intersection,
@@ -40,9 +39,9 @@ export {
   Optional,
   PickByValue,
   PickByValueExact,
-  Primitive,
   PromiseType,
   ReadonlyKeys,
+  AugmentedRequired as Required,
   RequiredKeys,
   SameType,
   SetComplement,
@@ -52,10 +51,16 @@ export {
   SymmetricDifference,
   Unionize,
   Values,
-  WritableKeys,
-} from './mapped-types';
+  WritableKeys
+} from "./mapped-types";
 
-export * from './type-guards';
+export {
+  Falsy,
+  Falsy as Falsey, // deprecated in v3, backward compatibility until v4
+  isFalsy,
+  Primitive,
+  isPrimitive
+} from "./aliases-and-guards";
 
 // deprecated
-export { getReturnOfExpression } from './functional-helpers';
+export { getReturnOfExpression } from "./functional-helpers";
